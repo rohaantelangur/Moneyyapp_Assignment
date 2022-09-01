@@ -7,19 +7,17 @@ import { getData } from '../Redux/action';
 export const Card = ({item, HandleAddToCart, page, text}) => {
   const [reviwe, setreviwe] = useState(item?.reviwe || "")
   const dispatch = useDispatch();
-  const toast = useToast()
-  const [Loading, setLoading] = useState(false)
+  const toast = useToast();
 
 
 
 
   const HandleAddReview =() => {
-    setLoading(true)
+    
 axios.patch(`http://localhost:8080/products/${item.id}`,{
     ...item,
     reviwe
 }).then((res)=>{
-  setLoading(false)
     dispatch(getData(page));
     return toast({
         title: 'Review Added',
@@ -37,7 +35,7 @@ axios.patch(`http://localhost:8080/products/${item.id}`,{
           <Text noOfLines={2} mb={1}>{item.title}</Text>
           <Input w="90%" mb={1} variant='filled' placeholder='Add Reviwe' type="text" name="reviwe" value={reviwe} onChange={(e)=>{setreviwe(e.target.value)}}/>
           <Button w="90%" mb={1} colorScheme={"green"} onClick={HandleAddReview}>Add Reviwe</Button>
-          <Button w="90%" mb={1} colorScheme={"red"} isLoading={Loading} onClick={() => HandleAddToCart(item)}>
+          <Button w="90%" mb={1} colorScheme={"red"} onClick={() => HandleAddToCart(item)}>
             Add To Cart
           </Button>
         </Box>
